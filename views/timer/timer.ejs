@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang ="en">
+    <%- include('../header'); %>
+    <style>
+  .rgba-gradient {
+      background: rgba(35, 7, 77, 0.6);
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, rgba(204, 83, 51, 0.6), rgba(35, 7, 77, 0.6));
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, rgba(204, 83, 51, 0.6), rgba(35, 7, 77, 0.6));
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+  #timerclock{
+    position : absolute;
+    top : 65%;
+    left : 22%;
+    font-size : 100px;
+    color:#FFF;
+    font-family:'Gugi',cursive;
+}
+#start-btn {
+    position : absolute;
+    top : 70%;
+    left : 53%;
+    height: 50px;
+    width: 50px;  
+    background-size:cover;
+    background-color:transparent;
+    border:none;
+    background-image:url('/pictures/play.png');
+    background-repeat:no-repeat;
+    }
+    #stop-btn {
+        position : absolute;
+    top : 70%;
+    left:58%;
+        height: 50px;
+        width: 50px; 
+        background-size:cover;
+    background-color:transparent;
+    border:none;
+        background-image:url('/pictures/pause.png');
+        background-repeat:no-repeat;
+        }
+        #reset-btn {
+            position : absolute;
+    top : 70%;
+    left:63%; 
+            height: 50px;
+            width: 50px;  
+            background-size:cover;
+    background-color:transparent;
+    border:none;
+            background-image:url('/pictures/stop.png');
+            background-repeat:no-repeat;
+            }
+  </style>
+  <body>
+      <header>
+    <%- include("../menu"); %>
+             <!-- Full Page Intro -->
+             <div id="intro-section" class="view">
+              <video class="video-intro" poster="https://mdbootstrap.com/img/Photos/Others/background.jpg" playsinline
+                  autoplay muted loop>
+                  <source src="https://mdbootstrap.com/img/video/animation.mp4" type="video/mp4">
+              </video>
+              <!-- Mask & flexbox options-->
+              <div class="mask rgba-gradient d-flex justify-content-center align-items-center">
+                  <!-- Content -->
+                  <div class="container px-md-3 px-sm-0">
+                      <!--Grid row-->
+                      <div class="row wow fadeIn">
+                          <!--Grid column-->
+                          <div class="col-md-12 mb-4 white-text text-center wow fadeIn">
+                              <h3 class="display-3 font-weight-bold white-text mb-0 pt-md-5 pt-5">Timer</h3>
+                              <hr class="hr-light my-4 w-75">
+                              <h4 class="subtext-header mt-2 mb-4">오늘 하루도 화이팅!</h4>
+                              <a href="#!" class="btn btn-rounded btn-outline-white" onclick="clickBtn();">
+                                <a href="#contact" class="btn btn-rounded btn-outline-white" onclick="clickBtn();">
+                                    <!-- <i class="bi bi-play-fill"></i> SOEASY-->
+                                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-play-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                     <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                                   </svg>
+                                   Run Timer
+                                 </a>
+                                 <a href="#contact" class="btn btn-rounded btn-outline-white" onclick="clickBtn();">
+                                     <!-- <i class="bi bi-play-fill"></i> SOEASY-->
+                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                         <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z"/>
+                                       </svg>
+                                    End Timer
+                                  </a>
+                                  <a href="#contact" class="btn btn-rounded btn-outline-white" onclick="clickBtn();">
+                                     <!-- <i class="bi bi-play-fill"></i> SOEASY-->
+                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-repeat" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                         <path fill-rule="evenodd" d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z"/>
+                                         <path fill-rule="evenodd" d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z"/>
+                                       </svg>
+                                    Reset Timer
+                                  </a>
+                              </a>
+                          </div>
+                          <!--Grid column-->
+                      </div>
+                      <!--Grid row-->
+                  </div>
+                  <!-- Content -->
+              </div>
+              <!-- Mask & flexbox options-->
+          </div>
+          <!-- Full Page Intro -->
+</header>
+<div id="timerclock">00:00:00</div>
+<button id="start-btn"></button>
+<button id="stop-btn"></button>
+<button id="reset-btn"></button>
+  <%- include("../footer"); %>
+</body>
+</html>

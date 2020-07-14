@@ -1,0 +1,99 @@
+<script>
+    
+    $('#daily-btn').click(() => {
+        const type = 'dailytime';
+        console.log("daily-btn excuted");
+        axios.post("/api/ranking/view", {
+            type: 1,
+        }).then((result) => {
+            console.log("daily");
+            const viewdaily = `
+                 <% entries = result.map(function(item, index) { %>
+                        <% console.log( item.dailytime + "데일리 타임") %>
+                        <% var hour = Math.floor(item.dailytime/3600)  %>
+                        <% var minute = Math.floor((item.dailytime-hour*3600)/60) %>
+                        <% var seconds = item.dailytime - (hour*3600 + minute*60)  %>
+                        <tr>
+                            Daily
+                            <th scope="row"><%= ++index + "등" %></th>
+                            <td><%= item.name %></td>
+                            <td><%= hour+"시간  "+minute+"분  "+seconds+"초"%></td>
+                        </tr>
+                        <%console.log(hour + "시간" + minute+"분" + seconds+"초"+ index + "등" + item.name + "last") %>
+                        <% }) %>
+                        `;      
+           /* $("#tbody").empty();
+            $("#tbody").append(viewdaily);*/
+            $("#tbody").html(viewdaily);
+            console.log(viewdaily);
+        });
+    });
+
+
+    $('#weekly-btn').click(() => {
+        const type = 2;
+        console.log("weekly-btn excuted");
+        axios.post("/api/ranking/view", {
+            type: 2,
+        }).then((result) => {
+           
+            const viewweekly = `
+                <% entries = result.map(function(weekly, index) { %>
+                        <% console.log( weekly.weeklytime + "위클리 타임") %>
+                        <% var hour = Math.floor(weekly.weeklytime /3600)  %>
+                        <% var minute = Math.floor((weekly.weeklytime-hour*3600)/60) %>
+                        <% var seconds = weekly.weeklytime- (hour*3600 + minute*60)  %>
+                        <tr>
+                            Weekly
+                            <th scope="row"><%= ++index + "등" %></th>
+
+                            <td><%= weekly.name %></td>
+                            <td><% hour/3600+"시간  "+minute+"분  "+seconds+"초"%></td>
+                        </tr>
+                        <%console.log(hour + "시간" + minute+"분" + seconds+"초"+ index + "등" + weekly.name + "last") %>
+                        <% }) %>`;
+
+            if(type == 2){
+            // $("#tbody").empty();
+            // $("#tbody").append(viewweekly);
+            $("#tbody").html(viewweekly);
+            console.log(viewweekly);
+            }
+        });
+    });
+
+
+
+    $('#alltime-btn').click(() => {
+        const type = 3;
+        console.log("alltime-btn excuted");
+        axios.post("/api/ranking/view", {
+            type: 3,
+        }).then((result) => {
+            
+            const viewalltime = `
+                <% entries = result.map(function(item, index) { %>
+                        <% console.log( item.time + "올 타임") %>
+                        <% var hour = Math.floor(item.time/3600)  %>
+                        <% var minute = Math.floor((item.time-hour*3600)/60) %>
+                        <% var seconds = item.time - (hour*3600 + minute*60)  %>
+                        <tr>
+                            Alltime
+                            <th scope="row"><%= ++index + "등" %></th>
+                            <% // console.log(item.time) %>
+                            <td><%= item.name %></td>
+                            <td><%= hour+"시간  "+minute+"분  "+seconds+"초"%></td>
+                        </tr>3
+                        
+                        <% console.log(hour + "시간" + minute+"분" + seconds+"초"+ index + "등" + item.name + "last") %>
+                        <% }) %>
+                        `;
+            // $("#tbody").empty();
+            // $("#tbody").append(viewalltime);
+            $("#tbody").html(viewalltime);
+            console.log(viewalltime);     
+        });
+    });
+
+
+</script>

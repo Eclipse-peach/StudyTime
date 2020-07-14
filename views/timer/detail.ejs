@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../header'); %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+.rgba-gradient {
+        background: rgba(35, 7, 77, 0.6);
+        /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, rgba(204, 83, 51, 0.6), rgba(35, 7, 77, 0.6));
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, rgba(204, 83, 51, 0.6), rgba(35, 7, 77, 0.6));
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .top-nav-collapse,
+    .page-footer {
+        background: linear-gradient(to right, rgba(204, 83, 51, 0.8), rgba(62, 1, 120, 0.3));
+       
+    }
+
+    .navbar:not(.top-nav-collapse) {
+        background: transparent !important;
+    }
+
+    @media (max-width: 991px) {
+        .navbar:not(.top-nav-collapse) {
+            background: linear-gradient(to right, rgba(204, 83, 51, 0.8), rgba(64, 0, 159, 0.3)) !important;
+        }
+    }
+    #timerclock {
+        position: relative;
+        color: #FFF;
+        font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    #start-btn {
+        height: 4em;
+        width: 15em;
+        background-size: cover;
+        background-color: transparent;
+        border: none;
+        background-repeat: no-repeat;
+    }
+
+    #stop-btn {
+        height: 4em;
+        width: 15em;
+        background-size: cover;
+        background-color: transparent;
+        border: none;
+        background-repeat: no-repeat;
+    }
+
+    #reset-btn {
+        height: 4em;
+        width: 15em;
+        background-size: cover;
+        background-color: transparent;
+        border: none;
+        background-repeat: no-repeat;
+    }
+    .menu{
+        font-family: 'Nanum Myeongjo', serif;
+    letter-spacing : 0px;
+    }
+    .book{
+        font-family: 'Nanum Myeongjo', serif;
+    letter-spacing : 3px;
+    }
+    .book-b{
+        font-family: 'Nanum Myeongjo', serif;
+    font-size:0.8em;
+    }
+</style>
+
+<body>
+    <header>
+        <%- include("../menu"); %>
+        <!-- Full Page Intro -->
+        <div id="intro-section" class="view">
+            <video class="video-intro" poster="https://mdbootstrap.com/img/Photos/Others/background.jpg" playsinline
+                autoplay muted loop>
+                <source src="https://mdbootstrap.com/img/video/animation.mp4" type="video/mp4">
+            </video>
+            <!-- Mask & flexbox options-->
+            <div class="mask rgba-gradient d-flex justify-content-center align-items-center">
+                <!-- Content -->
+                <div class="container px-md-3 px-sm-0">
+                    <!--Grid row-->
+                    <div class="row wow fadeIn">
+                        <!--Grid column-->
+                        <div class="col-md-12 mb-4 white-text text-center wow fadeIn">
+                            <h3 class="display-3 font-weight-bold white-text mb-0 pt-md-5 pt-5 book">Timer</h3>
+                            <hr class="hr-light my-4 w-75">
+                            <h4 class="subtext-header mt-2 mb-4 book">오늘 하루도 화이팅!</h4>
+                            <a  class="btn btn-rounded btn-outline-white" id="start-btn">
+                                <!-- <i class="bi bi-play-fill"></i> SOEASY-->
+                                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-play-fill"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
+                                </svg>
+                                Run Timer
+                            </a>
+                            <a class="btn btn-rounded btn-outline-white" id="stop-btn">
+                                <!-- <i class="bi bi-play-fill"></i> SOEASY-->
+                                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-square-fill"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z" />
+                                </svg>
+                                End Timer
+                            </a>
+                            <a  class="btn btn-rounded btn-outline-white" id="reset-btn">
+                                <!-- <i class="bi bi-play-fill"></i> SOEASY-->
+                                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-repeat"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z" />
+                                    <path fill-rule="evenodd"
+                                        d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z" />
+                                </svg>
+                                Reset Timer
+                            </a>
+                        </div>
+                        <!--Grid column-->
+                        <div id="timerclock" class="col-md-12 mb-4 white-text text-center wow fadeIn"><h1 class="display-3 book">00:00:00</h1></div>
+                        <div class="col-md-12 mt-5 white-text text-center wow fadeIn">
+                            <hr class="hr-light my-4 w-100">
+                                <h5 class=" mt-2 mb-4 book">너가 두려워야 할</h5>
+                                <h5 class=" mt-2 mb-4 book">사람은</h5>
+                                <h5 class="mt-2 mb-4 book">너 자신뿐이야.</h5>
+                                <h5 class="mt-2 mb-4 book-b">-영화 블랙스완 中-</h5>
+                          </div>
+                    </div>
+                    <!--Grid row-->
+                </div>
+                <!-- Content -->
+            </div>
+            <!-- Mask & flexbox options-->
+        </div>
+        <!-- Full Page Intro -->
+    </header>
+    <%- include("../footer"); %>
+
+    <script>
+        let intervalId = null;
+        let timerclock = document.getElementById("timerclock");
+        let plag = false;
+
+
+        let totalSeconds = "0"
+        // if (localStorage.getItem('time') == null) localStorage.setItem('time', totalSeconds);
+        // 이 방식을 사용하면 localStorage의 브라우저 이동시 데이터 삭제 오류 해결 가능?
+
+        function startTimer() {
+            console.log("째깍,,");
+            ++totalSeconds;
+            hour = Math.floor(totalSeconds / 3600);
+            minute = Math.floor((totalSeconds - hour * 3600) / 60);
+            seconds = totalSeconds - (hour * 3600 + minute * 60);
+            formatseconds = formattimer(seconds);
+            formatminute = formattimer(minute);
+            formattime = formattimer(hour);
+            timerclock.innerHTML = '<h1 class="display-3 book">' + formattime + ":" + formatminute + ":" + formatseconds + "</h1>";
+        }
+        function formattimer(num) {
+            if (num < 10) {
+                num = num.toString();
+                num = '0' + num;
+            }
+            else num = num.toString();
+            return num;
+        }
+        $('#start-btn').click(() => {
+            console.log("onClick method")
+            if (plag == false) {
+                intervalId = setInterval(startTimer, 1000);
+                plag = true;
+            }
+        });
+
+        $('#stop-btn').click(() => {
+            if (intervalId)
+                clearInterval(intervalId);
+            plag = false;
+        });
+
+
+
+        $('#reset-btn').click(() => {
+
+            console.log("reset-btn...");
+
+            if (intervalId)
+                clearInterval(intervalId);
+            // localStorage => MongoDB로 바꾸는 과정,,
+            // 1. localStorage.getItem('time')이 null일때 => result.time이 null?일때(없을때)
+            // 2. 위 참고- localStorage.getItem에 result.time을 넣고,, localStorage.getItem의 값을 post or put으로 result.time에 넣는다면?
+            // post로 db에 넣어줘야 될거같은데,,
+            // result._id는 뭐지??
+            // localStorage를 사용하는건 아무래도 좋지 않은 선택,, DB로 밀고가보자
+            //   if (localStorage.getItem('time') == null) localStorage.setItem('time', totalSeconds);
+            //   else localStorage.setItem('time', parseInt(localStorage.getItem('time')) + parseInt(totalSeconds));
+            //var obj = JSON.parse(localStorage.getItem('time'));
+            plag = false;
+
+            
+            axios.get("/api/user/info").then((result) => {
+
+                console.log(result.data.email + "찍힌건가?");
+
+                axios.post(`/api/timer/put?email=${result.data.email}`, {
+                    time: totalSeconds,
+                    name: result.data.name,
+                }).then(({ data }) => {
+                    totalSeconds = 0;
+                    console.log("DB에 들어갔어요!");
+                    timerclock.innerHTML = '<h1 class="display-3 book">00:00:00</h1>' ;
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

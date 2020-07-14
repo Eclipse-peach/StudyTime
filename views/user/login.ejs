@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../header"); %>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+.rgba-gradient {
+        background: rgba(35, 7, 77, 0.6);
+        /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, rgba(204, 83, 51, 0.6), rgba(35, 7, 77, 0.6));
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, rgba(204, 83, 51, 0.6), rgba(35, 7, 77, 0.6));
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .top-nav-collapse,
+    .page-footer {
+        background: linear-gradient(to right, rgba(0, 135, 253, 0.8), rgba(62, 1, 120, 0.3)) !important;
+       
+    }
+
+    .navbar:not(.top-nav-collapse) {
+        background: linear-gradient(to right, rgba(0, 128, 255, 0.8), rgba(64, 0, 159, 0.3)) !important;
+    }
+
+    @media (max-width: 991px) {
+        .navbar:not(.top-nav-collapse) {
+            background: linear-gradient(to right, rgba(204, 83, 51, 0.8), rgba(64, 0, 159, 0.3)) !important;
+        }
+    }
+    .menu{
+        font-family: 'Nanum Myeongjo', serif;
+    letter-spacing : 0px;
+    }
+    .hi{
+        margin-top:20vh;
+    }
+    .logincolor{
+        background: linear-gradient(to right, rgba(204, 83, 51, 0.8), rgba(64, 0, 159, 0.3)) !important;
+    }
+    .buttoncolor{
+        color: rgba(255, 136, 136, 0.6) !important;
+        background: transparent !important;
+    border: 2px solid rgba(255, 136, 136, 0.6) !important;
+    }
+</style>
+<body>
+    <%- include("../menu"); %>
+
+    <!-- Material form register -->
+    <div class="container px-md-3 px-sm-0 hi">
+    <div class="card mt-5">
+        <h5 class="card-header logincolor white-text text-center py-4">
+            <strong class ="menu">Login</strong>
+        </h5>
+
+        <!--Card content-->
+        <div class="card-body px-lg-5 pt-0">
+
+            <!-- Form -->
+            <form id="loginForm" class="text-center" style="color: #757575;" action="#!">
+                <!-- E-mail -->
+                <div class="md-form mt-0">
+                    <input type="email" id="email" class="form-control menu" required>
+                    <label for="email" class ="menu">Input E-mail</label>
+                </div>
+
+                <!-- Password -->
+                <div class="md-form">
+                    <input type="password" id="password" class="form-control" required
+                        aria-describedby="materialRegisterFormPasswordHelpBlock">
+                    <label for="password" class = "menu">Password</label>
+                </div>
+
+                <!-- Log in button -->
+                <button class="btn buttoncolor menu btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">
+                    Login
+                </button>
+            </form>
+            <!-- Form -->
+
+        </div>
+    </div>
+</div>
+    <!-- Material form register -->
+    <%- include("../footer"); %>
+    <script>
+        $(function () {
+            $("#loginForm").submit((event) => {
+                event.preventDefault();
+                //로그인
+                const email = $("#email").val();
+                const password = $("#password").val();
+
+                $.ajax({
+                    url: "/api/user/login",
+                    type: "POST",
+                    data: { email, password },
+                }).done(() => {
+                    alert("로그인 성공!");
+                    location.href="/";
+                }).fail((request, status, error) => {
+                    alert(request.responseText);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

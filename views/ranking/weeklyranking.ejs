@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../header'); %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<style>
+    .rgba-gradient {
+        background: rgba(35, 7, 77, 0.6);
+        /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, rgba(204, 83, 51, 0.6), rgba(35, 7, 77, 0.6));
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, rgba(204, 83, 51, 0.6), rgba(35, 7, 77, 0.6));
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .top-nav-collapse,
+    .page-footer {
+        background-color: #563e91 !important;
+    }
+
+    .navbar:not(.top-nav-collapse) {
+        background: transparent !important;
+    }
+
+    @media (max-width: 991px) {
+        .navbar:not(.top-nav-collapse) {
+            background: #563e91 !important;
+        }
+    }
+</style>
+
+<body>
+    <header>
+        <%- include("../menu"); %>
+        <!-- Full Page Intro -->
+        <div id="intro-section" class="view">
+            <video class="video-intro" poster="https://mdbootstrap.com/img/Photos/Others/background.jpg" playsinline
+                autoplay muted loop>
+                <source src="https://mdbootstrap.com/img/video/animation.mp4" type="video/mp4">
+            </video>
+            <!-- Mask & flexbox options-->
+            <div class="mask rgba-gradient d-flex justify-content-center align-items-center">
+                <!-- Content -->
+                <div class="container px-md-3 px-sm-0">
+                    <!--Grid row-->
+                    <div class="row wow fadeIn">
+                        <!--Grid column-->
+                        <div class="col-md-12 mb-4 white-text text-center wow fadeIn">
+                            <h3 class="display-3 font-weight-bold white-text mb-0 pt-md-5 pt-5">WeeklyRanking</h3>
+                            <hr class="hr-light my-4 w-75">
+                            <h4 class="subtext-header mt-2 mb-4">오늘 하루, 그 누구보다 열심히 달린 사람들</h4>
+                            <a class="btn btn-rounded btn-outline-white" id="daily-btn">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                                </svg>
+                                Daily
+                            </a>
+                            <a class="btn btn-rounded btn-outline-white" id="weekly-btn">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                                </svg>
+                                Weekly
+                            </a>
+                            <a class="btn btn-rounded btn-outline-white" id="alltime-btn">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                                </svg>
+                                Alltime
+                            </a>
+                        </div>
+                        <table class="col-md-12 mb-4 wow fadeIn white-text table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Rank</th>
+                                    <th scope="col">NickName</th>
+                                    <th scope="col">Time</th>
+                                </tr>
+                            </thead>
+                            <!-- 해야할거 2가지 
+                            1. node-schedules로 하루, 일주일 간격 갱신 만들기
+                            2. 버튼을 누르면 요소를 바꿔주는거! -->
+                            <tbody>
+                                <% console.log("weeklyranking 접속") %>
+                                <% entries = result.map(function(item, index) { %>
+                                    <% var hour = Math.floor(item.weeklytime/3600)  %>
+                                    <% var minute = Math.floor((item.weeklytime-hour*3600)/60) %>
+                                    <% var seconds = item.weeklytime - (hour*3600 + minute*60)  %>
+                                    <tr>
+                                        <th scope="row"><%= ++index + "등" %></th>
+                                        <% console.log(item.weeklytime) %>
+                                        
+                                        <% console.log("type : " +type) %>
+                                        <td><%= item.name %></td>
+                                        <td><%=hour+"시간  "+minute+"분  "+seconds+"초"%></td>
+                                    </tr><% console.log(hour,minute,seconds) %>
+                                    <% }) %>
+                                    <%- entries %>
+                              <!--  <% if (type == 3 || type == null) { %>
+                                    <% entries = result.map(function(item, index) { %>
+                                <% var hour = Math.floor(item.time/3600)  %>
+                                <% var minute = Math.floor((item.time-hour*3600)/60) %>
+                                <% var seconds = item.time - (hour*3600 + minute*60)  %>
+                                <tr>
+                                    <th scope="row"><%= ++index + "등" %></th>
+                                    <% console.log(item.time) %>
+                                   
+                                    <% console.log("type : " + type) %>
+                                    <td><%= item.name %></td>
+                                    <td><%=hour+"시간  "+minute+"분  "+seconds+"초"%></td>
+                                </tr> <% console.log(hour,minute,seconds) %>
+                                <% }) %>
+                                <%- entries %>
+                                <% } else if (type == 2) { %>
+                                    <% entries = result.map(function(item, index) { %>
+                                <% var hour = Math.floor(item.weeklytime/3600)  %>
+                                <% var minute = Math.floor((item.weeklytime-hour*3600)/60) %>
+                                <% var seconds = item.weeklytime - (hour*3600 + minute*60)  %>
+                                <tr>
+                                    <th scope="row"><%= ++index + "등" %></th>
+                                    <% console.log(item.weeklytime) %>
+                                    
+                                    <% console.log("type : " +type) %>
+                                    <td><%= item.name %></td>
+                                    <td><%=hour+"시간  "+minute+"분  "+seconds+"초"%></td>
+                                </tr><% console.log(hour,minute,seconds) %>
+                                <% }) %>
+                                <%- entries %>
+                                <% } else if (type == 1) { %>
+                                    <% entries = result.map(function(item, index) { %>
+                                <% var hour = Math.floor(item.dailytime/3600)  %>
+                                <% var minute = Math.floor((item.dailytime-hour*3600)/60) %>
+                                <% var seconds = item.dailytime - (hour*3600 + minute*60)  %>
+                                <tr>
+                                    <th scope="row"><%= ++index + "등" %></th>
+                                    <% console.log(item.dailytime) %>
+                                   
+                                    <% console.log("type : " +type) %>
+                                    <td><%= item.name %></td>
+                                    <td><%=hour+"시간  "+minute+"분  "+seconds+"초"%></td>
+                                </tr> <% console.log(hour,minute,seconds) %>
+                                <% }) %>
+                                <%- entries %>
+                                <% } %>
+                                -->
+                            </tbody>
+                        </table>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                </div>
+                <!-- Content -->
+            </div>
+            <!-- Mask & flexbox options-->
+        </div>
+        <!-- Full Page Intro -->
+    </header>
+    <%- include("../footer"); %>
+    <script>
+        $('#daily-btn').click(() => {
+            console.log("d");
+            axios.post("/api/ranking/view", {
+                type: 1,
+            }).then((result) => {
+                console.log(result + "daily");
+            });
+        });
+        $('#weekly-btn').click(() => {
+            console.log("w");
+            axios.post("/api/ranking/view", {
+                type: 2,
+            }).then((result) => {
+                console.log(result + "weekly");
+            });
+        });
+        $('#alltime-btn').click(() => {
+            console.log("a");
+            axios.post("/api/ranking/view", {
+                type: 3,
+            }).then((result) => {
+                console.log(result + "alltime");
+            });
+        });
+    </script>
+</body>
+
+</html>
